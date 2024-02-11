@@ -1,0 +1,22 @@
+{
+  "name": "Back-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "prisma": "^5.9.1"
+  },
+  "dependencies": {
+    "@prisma/client": "5.9.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.2",
+    "express": "^4.18.2",
+    "init": "^0.1.2"
+  }
+}
