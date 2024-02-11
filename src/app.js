@@ -15,4 +15,4 @@ app.post("/register", (req, res, next) => {
   res.json({ name, email, password, confirmPassword });
 });
 
-app.listen(8777, () => console.log("service is running in port 8777"));
+app.listen(8777, () => console.log(" service is running in port 8777"));
