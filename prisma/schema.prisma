@@ -11,25 +11,27 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   name       String
-  email      String?  @unique
+  email      String?   @unique
   modile     String?
   password   String
-  created_at DateTime @default(now()) @db.Date
+  created_at DateTime  @default(now()) @db.Timestamp(0)
+  Booking    Booking[]
 
   @@map("users")
 }
 
 model Property {
-  id            Int     @id @default(autoincrement())
-  property_name String  @unique
+  id            Int       @id @default(autoincrement())
+  property_name String    @unique
   address       String?
   description   String
   nightly_price String
   num_guests    Int?
   image         String?
-  is_available  Boolean @default(false)
+  is_available  Boolean   @default(false)
+  Bookings      Booking[]
 
   @@map("propertys")
 }
@@ -40,7 +42,11 @@ model Booking {
   checkin_out   DateTime @db.Date
   nightly_price Int
   total_price   Int
-  created_at    DateTime @default(now()) @db.Date
+  created_at    DateTime @default(now()) @db.Timestamp(0)
+  property_id   Int
+  property      Property @relation(fields: [property_id], references: [id])
+  user_id       Int
+  user          User     @relation(fields: [user_id], references: [id])
 
   @@map("bookings")
 }
