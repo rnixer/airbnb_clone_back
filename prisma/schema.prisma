@@ -10,43 +10,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum PaymentStatus {
+  SUCCESSFUL
+  PENDING
+  FAILURE
+}
+
 model User {
   id         Int       @id @default(autoincrement())
   name       String
   email      String?   @unique
   modile     String?
   password   String
+  image      String?
   created_at DateTime  @default(now()) @db.Timestamp(0)
   Booking    Booking[]
+  Payments   Payment[]
 
   @@map("users")
 }
 
 model Property {
-  id            Int       @id @default(autoincrement())
-  property_name String    @unique
-  address       String?
-  description   String
-  nightly_price String
-  num_guests    Int?
-  image         String?
-  is_available  Boolean   @default(false)
-  Bookings      Booking[]
+  id               Int       @id @default(autoincrement())
+  property_name    String    @unique
+  address          String?
+  description      String?
+  nightly_price    String
+  num_guests       Int?
+  image            String?
+  is_available     Boolean   @default(true)
+  mobile_promptpay String    @unique
+  Bookings         Booking[]
+  Payments         Payment[]
 
   @@map("propertys")
 }
 
 model Booking {
-  id            Int      @id @default(autoincrement())
-  checkin_date  DateTime @db.Date
-  checkin_out   DateTime @db.Date
-  nightly_price Int
-  total_price   Int
-  created_at    DateTime @default(now()) @db.Timestamp(0)
-  property_id   Int
-  property      Property @relation(fields: [property_id], references: [id])
-  user_id       Int
-  user          User     @relation(fields: [user_id], references: [id])
+  id           Int      @id @default(autoincrement())
+  checkin_date DateTime @db.Date
+  checkin_out  DateTime @db.Date
+  total_price  Int
+  image        String
+  created_at   DateTime @default(now()) @db.Timestamp(0)
+  property_id  Int
+  property     Property @relation(fields: [property_id], references: [id])
+  user_id      Int
+  user         User     @relation(fields: [user_id], references: [id])
 
   @@map("bookings")
+}
+
+model Payment {
+  id          Int           @id @default(autoincrement())
+  status      PaymentStatus @default(PENDING)
+  property_id Int
+  property    Property      @relation(fields: [property_id], references: [id])
+  user_id     Int
+  user        User          @relation(fields: [user_id], references: [id])
 }

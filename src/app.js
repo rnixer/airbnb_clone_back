@@ -10,4 +10,5 @@ app.use(cors());
 
 app.use("/auth", authRoute);
 
-app.listen(8777, () => console.log(" service is running in port 8777"));
+const PORT = process.env.PORT || 8000;
+app.listen(PORT, () => console.log("service is running in port", PORT));
