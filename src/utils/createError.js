@@ -1,7 +1,7 @@
 const createError = (message, statusCode) => {
   const error = new Error(message);
   error.statusCode = statusCode;
-  console.log("E", error);
+  console.log(error);
   throw error;
 };
 

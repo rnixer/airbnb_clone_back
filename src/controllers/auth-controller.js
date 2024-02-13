@@ -5,7 +5,7 @@ const hashService = require("../services/hash-service");
 const jwtService = require("../services/jwt-service");
 
 exports.register = catchError(async (req, res, next) => {
-  const existsUser = await userService.findUserByEmail(req.email);
+  const existsUser = await userService.findUserByEmail(req.body.email);
   if (existsUser) createError("EMAIL_IN_USE", 400);
 
   req.body.password = await hashService.hash(req.body.password);
@@ -20,9 +20,9 @@ exports.register = catchError(async (req, res, next) => {
 
 exports.login = catchError(async (req, res, next) => {
   const existsUser = await userService.findUserByEmail(req.body.email);
-  console.log(existsUser);
+  // console.log(existsUser);
   if (!existsUser) {
-    throw createError("Invalid Credentials", 400);
+    createError("Invalid Credentials", 400);
   }
 
   const isMatch = await hashService.compare(
@@ -39,3 +39,7 @@ exports.login = catchError(async (req, res, next) => {
 
   res.status(201).json({ accessToken, user: existsUser });
 });
+
+exports.getMe = (req, res, next) => {
+  res.status(200).json({ user: req.user });
+};
