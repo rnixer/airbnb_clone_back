@@ -3,10 +3,10 @@ const validate = require("./validator");
 
 const registerSchema = Joi.object({
   name: Joi.string().required().trim().messages({
-    "string.empty": "last name is require",
+    "string.empty": "name is require",
   }),
   email: Joi.string().email({ tlds: false }).required().messages({
-    "alternatives.match": "invalid email address or mobile number",
+    "string.empty": "invalid email address",
   }),
   password: Joi.string()
     .pattern(/^[a-zA-Z0-9]{6,}$/)

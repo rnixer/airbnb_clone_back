@@ -20,7 +20,7 @@ exports.register = catchError(async (req, res, next) => {
 
 exports.login = catchError(async (req, res, next) => {
   const existsUser = await userService.findUserByEmail(req.body.email);
-  // console.log(existsUser);
+
   if (!existsUser) {
     createError("Invalid Credentials", 400);
   }
@@ -33,6 +33,7 @@ exports.login = catchError(async (req, res, next) => {
   if (!isMatch) {
     createError("Invalid Credentials", 400);
   }
+
   const payload = { userId: existsUser.id };
   const accessToken = jwtService.sign(payload);
   delete existsUser.password;
