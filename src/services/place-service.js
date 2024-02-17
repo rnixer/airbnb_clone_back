@@ -11,9 +11,21 @@ exports.findPropertyName = (propertyName) =>
       property_name: propertyName,
     },
   });
-exports.findMobilePromptpay = (mobilePromptpay) =>
-  prisma.property.findFirst({
+
+exports.getAllMyPlace = (userId) =>
+  prisma.property.findMany({
+    where: { user_id: userId },
+  });
+
+exports.deletePlace = (id) =>
+  prisma.property.delete({
+    where: { id: id },
+  });
+
+exports.editPlace = (id, data) =>
+  prisma.property.update({
     where: {
-      mobile_promptpay: mobilePromptpay,
+      id,
     },
+    data: data,
   });

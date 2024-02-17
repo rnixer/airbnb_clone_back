@@ -5,7 +5,7 @@ const storage = multer.diskStorage({
     cb(null, "public/images");
   },
   filename: (req, file, cb) => {
-    console.log(file);
+    // console.log(file);
     const filename =
       Date.now() +
       Math.round(Math.random() * 1000000) +

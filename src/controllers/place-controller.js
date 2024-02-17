@@ -33,18 +33,15 @@ exports.createPlace = catchError(async (req, res, next) => {
     nightly_price: req.body.nightly_price,
     address: req.body.address,
     description: req.body.description,
-    num_guests: +req.body.num_guests,
+    num_guests: req.body.num_guests,
     mobile_promptpay: req.body.mobile_promptpay,
   };
   const existPropertyName = await placeService.findPropertyName(
     req.body.property_name
   );
-  const existMobilePromptpay = await placeService.findMobilePromptpay(
-    req.body.mobile_promptpay
-  );
 
-  if (existPropertyName || existMobilePromptpay) {
-    createError("property name or mobile promptpay is in use");
+  if (existPropertyName && req.body.property_name) {
+    createError("property name is in use");
   }
 
   if (req.file) {
@@ -52,4 +49,29 @@ exports.createPlace = catchError(async (req, res, next) => {
   }
   const post = await placeService.createPlace(data);
   res.status(201).json({ post });
+});
+
+exports.getAllPlacesById = catchError(async (req, res, next) => {
+  const places = await placeService.getAllMyPlace(req.user.id);
+  res.status(200).json({ places });
+});
+
+exports.deletePlaceById = catchError(async (req, res, next) => {
+  await placeService.deletePlace(+req.params.id);
+  res.status(200).json("deleted success");
+});
+
+exports.editPlaceById = catchError(async (req, res, next) => {
+  if (req.file) {
+    req.body.image = await uploadService.upload(req.file.path);
+  }
+
+  // console.log("req.body", req.body);
+  console.log("req", req);
+  console.log("req.file", req.file);
+  console.log("req.body.image", req.body.image);
+  console.log("params", req.params.id);
+
+  await placeService.editPlace(+req.params.id, req.body);
+  res.status(200).json("updated success");
 });

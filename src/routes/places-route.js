@@ -9,5 +9,8 @@ const upload = require("../middlewares/upload");
 // router.patch("/", upload.single("image"), placeController.updatePlace);
 
 router.post("/", upload.single("image"), placeController.createPlace);
+router.get("/", placeController.getAllPlacesById);
+router.delete("/:id", placeController.deletePlaceById);
+router.patch("/:id", upload.single("image"), placeController.editPlaceById);
 
 module.exports = router;

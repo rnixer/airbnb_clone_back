@@ -6,3 +6,4 @@ exports.upload = async (path) => {
   });
   return secure_url;
 };
+

@@ -37,10 +37,10 @@ model Property {
   address          String?
   description      String?
   nightly_price    String
-  num_guests       Int?
+  num_guests       String?
   image            String?
   is_available     Boolean   @default(true)
-  mobile_promptpay String    @unique
+  mobile_promptpay String
   Bookings         Booking[]
   Payments         Payment[]
   user_id          Int
