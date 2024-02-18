@@ -10,6 +10,7 @@ const upload = require("../middlewares/upload");
 
 router.post("/", upload.single("image"), placeController.createPlace);
 router.get("/", placeController.getAllPlacesById);
+router.get("/all", placeController.getAllPlace);
 router.delete("/:id", placeController.deletePlaceById);
 router.patch("/:id", upload.single("image"), placeController.editPlaceById);
 

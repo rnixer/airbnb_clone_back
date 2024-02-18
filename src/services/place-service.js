@@ -12,11 +12,6 @@ exports.findPropertyName = (propertyName) =>
     },
   });
 
-exports.getAllMyPlace = (userId) =>
-  prisma.property.findMany({
-    where: { user_id: userId },
-  });
-
 exports.deletePlace = (id) =>
   prisma.property.delete({
     where: { id: id },
@@ -29,3 +24,10 @@ exports.editPlace = (id, data) =>
     },
     data: data,
   });
+
+exports.getAllMyPlace = (userId) =>
+  prisma.property.findMany({
+    where: { user_id: userId },
+  });
+
+exports.getAllPlace = () => prisma.property.findMany();

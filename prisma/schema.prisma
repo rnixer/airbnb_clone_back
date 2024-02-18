@@ -35,7 +35,7 @@ model Property {
   id               Int       @id @default(autoincrement())
   property_name    String    @unique
   address          String?
-  description      String?
+  description      String?   @db.VarChar(500)
   nightly_price    String
   num_guests       String?
   image            String?
@@ -53,8 +53,9 @@ model Booking {
   id           Int      @id @default(autoincrement())
   checkin_date DateTime @db.Date
   checkin_out  DateTime @db.Date
-  total_price  Int
-  image        String
+  total_price  Int?
+  image        String?
+  num_guests   String
   created_at   DateTime @default(now()) @db.Timestamp(0)
   property_id  Int
   property     Property @relation(fields: [property_id], references: [id])

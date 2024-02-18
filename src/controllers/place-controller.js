@@ -51,11 +51,6 @@ exports.createPlace = catchError(async (req, res, next) => {
   res.status(201).json({ post });
 });
 
-exports.getAllPlacesById = catchError(async (req, res, next) => {
-  const places = await placeService.getAllMyPlace(req.user.id);
-  res.status(200).json({ places });
-});
-
 exports.deletePlaceById = catchError(async (req, res, next) => {
   await placeService.deletePlace(+req.params.id);
   res.status(200).json("deleted success");
@@ -65,7 +60,6 @@ exports.editPlaceById = catchError(async (req, res, next) => {
   if (req.file) {
     req.body.image = await uploadService.upload(req.file.path);
   }
-
   // console.log("req.body", req.body);
   console.log("req", req);
   console.log("req.file", req.file);
@@ -74,4 +68,15 @@ exports.editPlaceById = catchError(async (req, res, next) => {
 
   await placeService.editPlace(+req.params.id, req.body);
   res.status(200).json("updated success");
+});
+
+exports.getAllPlacesById = catchError(async (req, res, next) => {
+  const myPlaces = await placeService.getAllMyPlace(req.user.id);
+  res.status(200).json({ myPlaces });
+});
+
+exports.getAllPlace = catchError(async (req, res, next) => {
+  const places = await placeService.getAllPlace();
+  console.log("places", places);
+  res.status(200).json({ places });
 });
