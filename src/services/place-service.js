@@ -36,6 +36,7 @@ exports.filter = (
   checkInDate,
   checkOutDate
 ) => prisma.$queryRaw`select distinct(p.property_name)
+, p.id , p.address,p.description,p.image
  from bookings b right join propertys p on b.property_id = p.id 
 
    WHERE (  b.checkin_date IS NULL and checkout_date is null )
