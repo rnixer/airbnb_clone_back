@@ -14,4 +14,6 @@ router.get("/all", placeController.getAllPlace);
 router.delete("/:id", placeController.deletePlaceById);
 router.patch("/:id", upload.single("image"), placeController.editPlaceById);
 
+router.get("/:checkInDate/:checkOutDate", placeController.getPlacesByDate);
+
 module.exports = router;

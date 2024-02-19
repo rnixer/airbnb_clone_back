@@ -80,3 +80,11 @@ exports.getAllPlace = catchError(async (req, res, next) => {
   console.log("places", places);
   res.status(200).json({ places });
 });
+
+exports.getPlacesByDate = catchError(async (req, res, next) => {
+  const filterPlaces = await placeService.filter(
+    req.params.checkInDate,
+    req.params.checkOutDate
+  );
+  res.status(200).json({ filterPlaces });
+});

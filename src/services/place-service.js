@@ -31,3 +31,13 @@ exports.getAllMyPlace = (userId) =>
   });
 
 exports.getAllPlace = () => prisma.property.findMany();
+
+exports.filter = (
+  checkInDate,
+  checkOutDate
+) => prisma.$queryRaw`select distinct(p.property_name)
+ from bookings b right join propertys p on b.property_id = p.id 
+
+   WHERE (  b.checkin_date IS NULL and checkout_date is null )
+      or ( b.checkin_date  and b.checkout_date not between ${checkInDate} and ${checkOutDate}) 
+         and ( ${checkInDate} and ${checkOutDate} not between b.checkin_date  and b.checkout_date  )`;
