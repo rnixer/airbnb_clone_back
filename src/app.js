@@ -5,6 +5,7 @@ const app = express();
 
 const authRoute = require("./routes/auth-route");
 const placeRoute = require("./routes/places-route");
+const bookingRoute = require("./routes/booking-route");
 const notFound = require("./middlewares/not-found");
 const error = require("./middlewares/error");
 const authenticate = require("./middlewares/authenticate");
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use("/auth", authRoute);
 app.use("/places", authenticate, placeRoute);
+app.use("/bookings", authenticate, bookingRoute);
 app.use("/public", express.static("public"));
 
 // app.post(

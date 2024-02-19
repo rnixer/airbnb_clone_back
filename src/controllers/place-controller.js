@@ -1,5 +1,5 @@
 const catchError = require("../utils/catch-error");
-const imageDownloader = require("image-downloader");
+// const imageDownloader = require("image-downloader");
 const createError = require("../utils/createError");
 
 const uploadService = require("../services/upload.service");
