@@ -39,7 +39,7 @@ model Property {
   nightly_price    String
   num_guests       String?
   image            String?
-  is_available     Boolean   @default(true)
+  // is_available     Boolean   @default(true)
   mobile_promptpay String
   Bookings         Booking[]
   Payments         Payment[]
@@ -61,6 +61,7 @@ model Booking {
   property      Property @relation(fields: [property_id], references: [id])
   user_id       Int
   user          User     @relation(fields: [user_id], references: [id])
+  payment       Payment?
 
   @@map("bookings")
 }
@@ -72,4 +73,6 @@ model Payment {
   property    Property      @relation(fields: [property_id], references: [id])
   user_id     Int
   user        User          @relation(fields: [user_id], references: [id])
+  booking_id  Int           @unique
+  booking     Booking       @relation(fields: [booking_id], references: [id], onDelete: Cascade)
 }

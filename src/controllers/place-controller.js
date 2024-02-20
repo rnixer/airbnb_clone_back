@@ -5,27 +5,6 @@ const createError = require("../utils/createError");
 const uploadService = require("../services/upload.service");
 const placeService = require("../services/place-service");
 
-// console.log(__dirname);
-
-// exports.upload = catchError(async (req, res, next) => {
-//   const { link } = req.body;
-//   const newName = Data.now() + ".jpg";
-//   await imageDownloader.image({
-//     url: link,
-//     dest: __dirname + "/uploads/" + newName,
-//   });
-//   res.json(__dirname + "/uploads/" + newName);
-// });
-
-// exports.updatePlace = catchError(async (req, res, next) => {
-//   if (!req.file) {
-//     createError("Image is require", 400);
-//   }
-
-//   await placeService.updatePlaceById({ image: req.file }, req.id);
-//   res.status(200).json({ message: "success" });
-// });
-
 exports.createPlace = catchError(async (req, res, next) => {
   const data = {
     user_id: req.user.id,
@@ -61,10 +40,10 @@ exports.editPlaceById = catchError(async (req, res, next) => {
     req.body.image = await uploadService.upload(req.file.path);
   }
   // console.log("req.body", req.body);
-  console.log("req", req);
-  console.log("req.file", req.file);
-  console.log("req.body.image", req.body.image);
-  console.log("params", req.params.id);
+  // console.log("req", req);
+  // console.log("req.file", req.file);
+  // console.log("req.body.image", req.body.image);
+  // console.log("params", req.params.id);
 
   await placeService.editPlace(+req.params.id, req.body);
   res.status(200).json("updated success");
@@ -84,7 +63,8 @@ exports.getAllPlace = catchError(async (req, res, next) => {
 exports.getPlacesByDate = catchError(async (req, res, next) => {
   const filterPlaces = await placeService.filter(
     req.params.checkInDate,
-    req.params.checkOutDate
+    req.params.checkOutDate,
+    req.params.num_guests
   );
   res.status(200).json({ filterPlaces });
 });

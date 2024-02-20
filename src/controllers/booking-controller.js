@@ -11,6 +11,12 @@ exports.createBooking = catchError(async (req, res, next) => {
     checkout_date: new Date(req.body.checkout_date),
     total_price: +req.body.total_price,
     num_guests: req.body.num_guests,
+    payment: {
+      create: {
+        user_id: req.user.id,
+        property_id: +req.body.property_id,
+      },
+    },
   };
 
   if (req.file) {
@@ -23,4 +29,9 @@ exports.createBooking = catchError(async (req, res, next) => {
 exports.getBookedPlaceById = catchError(async (req, res, next) => {
   const bookedPlaces = await bookingService.getBookedList(req.user.id);
   res.status(200).json({ bookedPlaces });
+});
+
+exports.deleteBookingsByPaymentStatus = catchError(async (req, res, next) => {
+  const bookingDeleted = await bookingService.deleteBookingsByPaymentStatus();
+  res.status(200).json({ bookingDeleted });
 });
