@@ -11,3 +11,8 @@ exports.createPayment = catchError(async (req, res, next) => {
   const payment = await paymentService.createPayment(data);
   res.status(201).json({ payment });
 });
+
+exports.getPayment = catchError(async (req, res, next) => {
+  const payment = await paymentService.getPaymentByPayerId(req.params.payerId);
+  res.status(200).json({ payment });
+});
