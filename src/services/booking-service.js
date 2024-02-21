@@ -23,6 +23,11 @@ exports.getBookedList = (userId) =>
           id: true,
         },
       },
+      payment: {
+        select: {
+          status: true,
+        },
+      },
     },
   });
 
@@ -34,6 +39,7 @@ exports.deleteBookingsByPaymentStatus = async () => {
       },
     },
   });
+
   // console.log("bookingToDelete", bookingToDelete);
   const result = await prisma.booking.delete({
     where: {

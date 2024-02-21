@@ -16,3 +16,11 @@ exports.getPayment = catchError(async (req, res, next) => {
   const payment = await paymentService.getPaymentByPayerId(req.params.payerId);
   res.status(200).json({ payment });
 });
+
+exports.updatePayment = catchError(async (req, res, next) => {
+  const paymentStatus = await paymentService.updatePaymentById(
+    req.body,
+    +req.params.id
+  );
+  res.status(200).json({ paymentStatus });
+});

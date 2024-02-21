@@ -33,8 +33,10 @@ exports.getAllMyPlace = (userId) =>
 exports.getAllPlace = () => prisma.property.findMany();
 
 exports.filter = (checkInDate, checkOutDate, num_guests) =>
-  prisma.$queryRaw` select p.id,p.property_name , p.num_guests
-  , b.checkin_date,b.checkout_date 
+  prisma.$queryRaw` 
+ select distinct(p.property_name), p.id, p.image,  p.num_guests ,p.address,p.nightly_price,p.description
+  --  b.checkin_date,b.checkout_date , 
+
   from bookings b right join  propertys p on b.property_id = p.id  where p.id not in (select p.id
  --   , p.id,b.property_id , p.address,b.checkin_date,b.checkout_date,b.total_price,p.num_guests -- บรรทัดนี้เอาออกซะ
   from bookings b right join  propertys p on b.property_id = p.id
@@ -43,4 +45,5 @@ exports.filter = (checkInDate, checkOutDate, num_guests) =>
  or (${checkInDate}  < b.checkin_date and ${checkOutDate} >  b.checkout_date )
  or ( ${checkOutDate} between b.checkin_date and  b.checkout_date )
  or ( ${checkInDate} and ${checkOutDate} between b.checkin_date and  b.checkout_date))
- and ${num_guests} <= p.num_guests  `;
+ and ${num_guests} <= p.num_guests 
+  `;
