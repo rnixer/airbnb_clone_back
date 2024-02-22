@@ -5,13 +5,19 @@ const placeController = require("../controllers/place-controller");
 const upload = require("../middlewares/upload");
 const {
   validateEditPlace,
+  validateCreatePlace,
 } = require("../middlewares/validator/validate-place");
 
 // router.post("/upload-by-link", placeController.upload);
 
 // router.patch("/", upload.single("image"), placeController.updatePlace);
 
-router.post("/", upload.single("image"), placeController.createPlace);
+router.post(
+  "/",
+  validateCreatePlace,
+  upload.single("image"),
+  placeController.createPlace
+);
 router.get("/", placeController.getAllPlacesById);
 router.get("/all", placeController.getAllPlace);
 router.delete("/:id", placeController.deletePlaceById);

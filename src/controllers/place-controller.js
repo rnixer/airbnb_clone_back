@@ -43,8 +43,8 @@ exports.editPlaceById = catchError(async (req, res, next) => {
   // if (existPropertyName) {
   //   createError("property name is in use");
   // }
-  console.log("existPropertyName !== req.body.property_name");
-  console.log("existPropertyName", existPropertyName.property_name);
+  // console.log("existPropertyName !== req.body.property_name");
+  // console.log("existPropertyName", existPropertyName.property_name);
   console.log("req.body.property_name", req.body.property_name);
 
   console.log(existPropertyName !== req.body.property_name);
