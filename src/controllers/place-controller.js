@@ -36,6 +36,22 @@ exports.deletePlaceById = catchError(async (req, res, next) => {
 });
 
 exports.editPlaceById = catchError(async (req, res, next) => {
+  const existPropertyName = await placeService.findPropertyName(
+    req.body.property_name
+  );
+
+  // if (existPropertyName) {
+  //   createError("property name is in use");
+  // }
+  console.log("existPropertyName !== req.body.property_name");
+  console.log("existPropertyName", existPropertyName.property_name);
+  console.log("req.body.property_name", req.body.property_name);
+
+  console.log(existPropertyName !== req.body.property_name);
+  if (existPropertyName && existPropertyName.id !== +req.params.id) {
+    createError("property name is in use");
+  }
+
   if (req.file) {
     req.body.image = await uploadService.upload(req.file.path);
   }
