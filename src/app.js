@@ -20,19 +20,6 @@ app.use("/bookings", authenticate, bookingRoute);
 app.use("/payments", authenticate, paymentRoute);
 app.use("/public", express.static("public"));
 
-// app.post(
-//   "/upload",
-//   require("./middlewares/upload").fields([
-//     // single,array,fields
-//     { name: "image", maxCount: 1 },
-//     { name: "coverImage", maxCount: 1 },
-//   ]),
-//   (req, res, next) => {
-//     console.log(req.file); //single
-//     console.log("**********");
-//     console.log(req.files); //array,fields
-//   }
-// );
 app.post(
   "/upload",
   require("./middlewares/upload").single("image"),

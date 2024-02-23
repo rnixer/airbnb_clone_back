@@ -8,8 +8,6 @@ const {
   validateCreatePlace,
 } = require("../middlewares/validator/validate-place");
 
-// router.post("/upload-by-link", placeController.upload);
-
 // router.patch("/", upload.single("image"), placeController.updatePlace);
 
 router.post(
