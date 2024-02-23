@@ -1,3 +1,4 @@
+const fs = require("fs/promises");
 const catchError = require("../utils/catch-error");
 // const imageDownloader = require("image-downloader");
 const createError = require("../utils/createError");
@@ -26,6 +27,7 @@ exports.createPlace = catchError(async (req, res, next) => {
   if (req.file) {
     data.image = await uploadService.upload(req.file.path);
   }
+  fs.unlink(req.file.path);
   const post = await placeService.createPlace(data);
   res.status(201).json({ post });
 });
@@ -60,6 +62,7 @@ exports.editPlaceById = catchError(async (req, res, next) => {
   // console.log("req.file", req.file);
   // console.log("req.body.image", req.body.image);
   // console.log("params", req.params.id);
+  fs.unlink(req.file.path);
 
   await placeService.editPlace(+req.params.id, req.body);
   res.status(200).json("updated success");
