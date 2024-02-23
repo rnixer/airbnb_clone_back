@@ -1,3 +1,5 @@
+const fs = require("fs/promises");
+
 const catchError = require("../utils/catch-error");
 
 const uploadService = require("../services/upload.service");
@@ -12,7 +14,6 @@ exports.createBooking = catchError(async (req, res, next) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(req.body.checkout_date)) {
     createError("check-out date must be a date", 400);
   }
-
   const data = {
     property_id: +req.body.property_id,
     user_id: req.user.id,
@@ -58,6 +59,7 @@ exports.createBooking = catchError(async (req, res, next) => {
 
   if (req.file) {
     data.image = await uploadService.upload(req.file.path);
+    fs.unlink(req.file.path);
   }
   const booking = await bookingService.createBooking(data);
   res.status(201).json({ booking });
